@@ -1,31 +1,37 @@
---Tabla USER --
-CREATE TABLE dbo.[USER]
-(
-    user_id INT IDENTITY(1,1) NOT NULL,
-    entra_id INT NOT NULL,
-    email VARCHAR(200) NOT NULL,
-    full_name VARCHAR(200) NOT NULL,
-    is_active BIT NOT NULL DEFAULT 1,
-    created_at DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
-
-    CONSTRAINT PK_USER
-        PRIMARY KEY (user_id)
-);
-
 --Tabla ROLE --
 CREATE TABLE dbo.[ROLE]
 (
     role_id INT IDENTITY(1,1) NOT NULL,
     name VARCHAR(200) NOT NULL,
     description VARCHAR(200) NOT NULL,
-    user_id INT NOT NULL,
 
     CONSTRAINT PK_ROLE
-        PRIMARY KEY (role_id),
+        PRIMARY KEY (role_id)
+);
 
-    CONSTRAINT FK_ROLE_USER
-        FOREIGN KEY (user_id)
-        REFERENCES dbo.[USER](user_id)
+--Tabla USER --
+CREATE TABLE dbo.[USER]
+(
+    user_id INT IDENTITY(1,1) NOT NULL,
+    entra_id UNIQUEIDENTIFIER NOT NULL,
+    email VARCHAR(200) NOT NULL,
+    full_name VARCHAR(200) NOT NULL,
+    is_active BIT NOT NULL DEFAULT 1,
+    created_at DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+    role_id INT NOT NULL,
+
+    CONSTRAINT PK_USER
+        PRIMARY KEY (user_id),
+
+    CONSTRAINT UQ_USER_ENTRA_ID
+        UNIQUE (entra_id),
+
+    CONSTRAINT UQ_USER_EMAIL
+        UNIQUE (email),
+
+    CONSTRAINT FK_USER_ROLE
+        FOREIGN KEY (role_id)
+        REFERENCES dbo.[ROLE](role_id)
 );
 
 --Tabla PERMISSION --
@@ -49,6 +55,9 @@ CREATE TABLE dbo.ROLE_PERMISSION
 
     CONSTRAINT PK_ROLE_PERMISSION
         PRIMARY KEY (role_permission_id),
+
+    CONSTRAINT UQ_ROLE_PERMISSION
+        UNIQUE (role_id, permission_id),
 
     CONSTRAINT FK_ROLE_PERMISSION_ROLE
         FOREIGN KEY (role_id)
