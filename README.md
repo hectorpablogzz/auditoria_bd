@@ -8,6 +8,6 @@ La propuesta técnica es trabajar con una sola base de datos centralizada desple
 ## Miembros
 **Administrador de BD Azure SQL:** Carlos Joaquín Baranda García
 
-**Representante de Equipo 11 - Maple:** Karla Alessandra Sánchez Saviñón
+**Arquitecta de Modelo Entidad Relación:** Karla Alessandra Sánchez Saviñón
 
-**Representante de Equipo 12 - MesaPara7:** Héctor Pablo González Espinosa
+**Administrador de Repositorio Compartido:** Héctor Pablo González Espinosa
